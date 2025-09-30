@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block extra_head %}
+<!-- FullCalendar CDN (css+js) -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/main.min.js'></script>
+{% end block %}
+
+{% block content %}
+<h1>Upcoming Events</h1>
+<div id='calendar'></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: "{% url 'events:json' %}"
+  });
+  calendar.render();
+});
+</script>
+
+<hr/>
+<h2>All events</h2>
+<ul>
+  {% for e in events %}
+    <li><a href="{% url 'events:detail' e.slug %}">{{ e.title }}</a> — {{ e.start_time }}</li>
+  {% empty %}
+    <li>No events.</li>
+  {% end for %}
+</ul>
+{% end block %}

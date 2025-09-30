@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ club.name }}</h1>
+{% if club.logo %}
+  <img src="{{ club.logo.url }}" style="max-width:200px;">
+{% endif %}
+<p>{{ club.description }}</p>
+
+<h2>Members</h2>
+<ul>
+  {% for m in members %}
+    <li>{{ m.name }} — {{ m.role }}</li>
+  {% empty %}
+    <li>No members added yet.</li>
+  {% end for %}
+</ul>
+
+<h2>Upcoming Events</h2>
+<ul>
+  {% for e in events %}
+    <li>{{ e.title }} — {{ e.start_time }}</li>
+  {% empty %}
+    <li>No events yet.</li>
+  {% end for %}
+</ul>
+
+<h2>Student Blogs</h2>
+<ul>
+  {% for p in posts %}
+    <li><a href="{% url 'blogs:detail' p.slug %}">{{ p.title }}</a></li>
+  {% empty %}
+    <li>No blog posts yet.</li>
+  {% end for %}
+</ul>
+{% end block %}

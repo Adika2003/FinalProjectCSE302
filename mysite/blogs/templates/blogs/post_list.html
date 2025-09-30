@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Student Blogs</h1>
+<ul>
+  {% for p in posts %}
+    <li>
+      <h3><a href="{% url 'blogs:detail' p.slug %}">{{ p.title }}</a></h3>
+      <p><small>By {{ p.author }} | {{ p.published|date:"F d, Y" }}</small></p>
+      <p>{{ p.content|truncate chars:150 }}</p>
+    </li>
+  {% empty %}
+    <li>No blog posts yet.</li>
+  {% end for %}
+</ul>
+{% end block %}

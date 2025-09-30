@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="post-detail">
+  <h1>{{ post.title }}</h1>
+  <p><small>By {{ post.author }} | {{ post.published|date:"F d, Y" }}</small></p>
+  <div class="post-body">
+    {{ post.content|linebreaks }}
+  </div>
+  <a href="{% url 'blogs:list' %}">← Back to all posts</a>
+</article>
+{% end block %}
