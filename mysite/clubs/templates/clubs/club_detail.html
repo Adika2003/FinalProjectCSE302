@@ -1,35 +1,91 @@
-
+{% extends 'base.html' %}
 {% block content %}
-<h1>{{ club.name }}</h1>
-{% if club.logo %}
-  <img src="{{ club.logo.url }}" style="max-width:200px;">
-{% endif %}
-<p>{{ club.description }}</p>
+<div style="max-width:1000px; margin:auto;">
 
-<h2>Members</h2>
-<ul>
-  {% for m in members %}
-    <li>{{ m.name }} — {{ m.role }}</li>
-  {% empty %}
-    <li>No members added yet.</li>
-  {% endfor %}
-</ul>
+  <!-- Club Intro -->
+  <div style="text-align:center; margin-bottom:30px;">
+    {% if club.logo %}
+      <img src="{{ club.logo.url }}" style="max-width:200px; margin-bottom:15px;">
+    {% endif %}
+    <h1>{{ club.name }}</h1>
+    <p style="font-size:18px; color:#555;">{{ club.description }}</p>
+  </div>
 
-<h2>Upcoming Events</h2>
-<ul>
-  {% for e in events %}
-    <li>{{ e.title }} — {{ e.start_time }}</li>
-  {% empty %}
-    <li>No events yet.</li>
-  {% endfor %}
-</ul>
+  <!-- Convener -->
+  {% if convener %}
+    <section style="margin:30px 0; text-align:center;">
+      <h2>Club Convener</h2>
+      <div style="border:1px solid #ddd; padding:20px; border-radius:10px; display:inline-block;">
+        {% if convener.photo %}
+          <img src="{{ convener.photo.url }}" style="max-width:150px; border-radius:10px;">
+        {% endif %}
+        <h3>{{ convener.name }}</h3>
+        <p>{{ convener.role }}</p>
+        <p>{{ convener.email }}</p>
+      </div>
+    </section>
+  {% endif %}
 
-<h2>Student Blogs</h2>
-<ul>
-  {% for p in posts %}
-    <li><a href="{% url 'blogs:detail' p.slug %}">{{ p.title }}</a></li>
-  {% empty %}
-    <li>No blog posts yet.</li>
-  {% endfor %}
-</ul>
+  <!-- Executive Members -->
+  <section style="margin:30px 0;">
+    <h2>Executive Members</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+      {% for m in executives %}
+        <div style="border:1px solid #ccc; border-radius:10px; padding:15px; width:220px; text-align:center; background:#fafafa;">
+          {% if m.photo %}
+            <img src="{{ m.photo.url }}" style="max-width:120px; border-radius:10px;">
+          {% endif %}
+          <h3>{{ m.name }}</h3>
+          <p><b>{{ m.role }}</b></p>
+          <p>Batch: {{ m.batch }}</p>
+          <p>{{ m.email }}</p>
+        </div>
+      {% empty %}
+        <p>No executive members yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- General Members -->
+  {% if generals %}
+  <section style="margin:30px 0;">
+    <h2>General Members</h2>
+    <ul>
+      {% for g in generals %}
+        <li>{{ g.name }} - {{ g.batch }} - {{ g.email }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <!-- Upcoming Events -->
+  <section style="margin:30px 0;">
+    <h2>Upcoming Events</h2>
+    <ul>
+      {% for e in events %}
+        <li><b>{{ e.title }}</b> — {{ e.start_time|date:"M d, Y H:i" }}</li>
+      {% empty %}
+        <li>No upcoming events.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- Blogs -->
+  <section style="margin:30px 0;">
+    <h2>Student Blogs</h2>
+    <ul>
+      {% for p in posts %}
+        <li>
+          <b>{{ p.title }}</b> by {{ p.author }} ({{ p.published|date:"M d, Y" }})
+        </li>
+      {% empty %}
+        <li>No blog posts yet.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+</div>
 {% endblock %}
+
+
+
