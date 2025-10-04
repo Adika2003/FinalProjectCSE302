@@ -5,4 +5,3 @@ from .models import Club
 class ClubAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
-
