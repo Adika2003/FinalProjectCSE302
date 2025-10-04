@@ -1,9 +1,38 @@
-
+{% extends 'base.html' %}
 {% block content %}
-<h1>All Clubs</h1>
-<ul>
-  {% for c in clubs %}
-    <li><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
-  {% endfor %}
-</ul>
+<div style="max-width:1000px; margin:auto;">
+  <h1>All Clubs</h1>
+
+  <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:20px;">
+    {% for c in clubs %}
+      <div style="border:1px solid #ccc; border-radius:10px; width:280px; padding:15px; background:#fff;">
+        <!-- Club Logo -->
+        {% if c.logo %}
+          <img src="{{ c.logo.url }}" style="max-width:100%; border-radius:8px; margin-bottom:10px;">
+        {% endif %}
+
+        <!-- Club Name -->
+        <h2 style="margin:10px 0; font-size:20px;">
+          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </h2>
+
+        <!-- Convener -->
+        {% with convener=c.members.filter(role_type='convener').first %}
+          {% if convener %}
+            <div style="margin-top:10px;">
+              {% if convener.photo %}
+                <img src="{{ convener.photo.url }}" style="max-width:60px; border-radius:50%;">
+              {% endif %}
+              <p><b>Convener:</b> {{ convener.name }}</p>
+            </div>
+          {% else %}
+            <p><i>No convener assigned</i></p>
+          {% endif %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
+
+
