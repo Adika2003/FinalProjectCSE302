@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+
 {% block content %}
 <h1>{{ club.name }}</h1>
 {% if club.logo %}
@@ -12,7 +12,7 @@
     <li>{{ m.name }} — {{ m.role }}</li>
   {% empty %}
     <li>No members added yet.</li>
-  {% end for %}
+  {% endfor %}
 </ul>
 
 <h2>Upcoming Events</h2>
@@ -21,7 +21,7 @@
     <li>{{ e.title }} — {{ e.start_time }}</li>
   {% empty %}
     <li>No events yet.</li>
-  {% end for %}
+  {% endfor %}
 </ul>
 
 <h2>Student Blogs</h2>
@@ -30,6 +30,6 @@
     <li><a href="{% url 'blogs:detail' p.slug %}">{{ p.title }}</a></li>
   {% empty %}
     <li>No blog posts yet.</li>
-  {% end for %}
+  {% endfor %}
 </ul>
-{% end block %}
+{% endblock %}
